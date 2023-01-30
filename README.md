@@ -19,5 +19,9 @@ setup client
   cd client
   npm install
   npm run dev
-  git clone http://localhost:5173/
+ 
+```
+open this link in browser
+```bash
+  http://localhost:5173/
 ```
