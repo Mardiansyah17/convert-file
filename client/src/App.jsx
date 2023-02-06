@@ -69,13 +69,18 @@ export default function App() {
   };
 
   const donwloadHandler = () => {
+    const url = `${import.meta.env.VITE_API_URL}download?path=${resultPath}`;
     axios
-      .get(`${import.meta.env.VITE_API_URL}download?path=${resultPath}`, {
+      .get(url, {
         responseType: "blob",
+        onDownloadProgress: (progressEvent) => {
+          setProgress(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)));
+        },
       })
       .then((res) => {
         fileDownload(res.data, `${fileName ? fileName : resultPath}.pdf`);
-        setResultPath("");
+        setResultPath(null);
+        axios.get(url);
       });
   };
   return (
@@ -108,13 +113,12 @@ export default function App() {
                 </div>
               ) : (
                 <div className="flex space-x-3 justify-center">
-                  <a
-                    href={`${import.meta.env.VITE_API_URL}download?path=${resultPath}`}
-                    // onClick={donwloadHandler}
+                  <button
+                    onClick={donwloadHandler}
                     className="px-3 py-2 bg-green-500 rounded-lg text-white mt-4"
                   >
                     Download
-                  </a>
+                  </button>
                   <button
                     onClick={() => setRename(true)}
                     className="px-3 py-2 bg-green-500 rounded-lg text-white mt-4"

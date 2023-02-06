@@ -37,16 +37,15 @@ router.post("/upload", upload.array("file"), (req, res) => {
 router.get("/download", (req, res) => {
   try {
     const file = `./public/pdf/${req.query.path}.pdf`;
-    res.download(file, (err) => {
-      if (err) {
-        throw err;
-      } else {
-        // fs.unlink(file, (err) => {
-        //   if (err) throw err;
-        //   console.log(`${file} was deleted`);
-        // });
-      }
-    });
+    return res.download(file);
+  } catch (error) {
+    res.json(error);
+  }
+});
+router.get("/delete", (req, res) => {
+  try {
+    const file = `./public/pdf/${req.query.path}.pdf`;
+    return fs.unlink(file);
   } catch (error) {
     res.json(error);
   }
