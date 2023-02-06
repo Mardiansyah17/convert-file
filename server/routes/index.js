@@ -41,10 +41,10 @@ router.get("/download", (req, res) => {
       if (err) {
         throw err;
       } else {
-        fs.unlink(file, (err) => {
-          if (err) throw err;
-          console.log(`${file} was deleted`);
-        });
+        // fs.unlink(file, (err) => {
+        //   if (err) throw err;
+        //   console.log(`${file} was deleted`);
+        // });
       }
     });
   } catch (error) {
